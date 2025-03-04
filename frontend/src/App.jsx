@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
 import './App.css'
 
-const socket = io('http://localhost:3000', {
+const socket = io('https://web-socket-chat-app-w5nq.onrender.com', {
   transports: ['websocket'],
   reconnectionAttempts: 5,
   reconnectionDelay: 1000,
