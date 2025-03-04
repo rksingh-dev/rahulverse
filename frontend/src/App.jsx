@@ -1,110 +1,66 @@
 import { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
-
+import './App.css'
+const socket = io('https://web-socket-chat-app-w5nq.onrender.com', {
+  transports: ['websocket'],
+  reconnectionAttempts: 5,
+  reconnectionDelay: 1000,
+})
 function App() {
   const [messages, setMessages] = useState([])
   const [message, setMessage] = useState('')
   const [username, setUsername] = useState('')
   const [isUsernameSet, setIsUsernameSet] = useState(false)
-
-  const socket = io('https://web-socket-chat-app-w5nq.onrender.com', {
-    transports: ['websocket'],
-    reconnectionAttempts: 5,
-    reconnectionDelay: 1000,
-  })
-
   useEffect(() => {
     socket.on('connect', () => {
       console.log('Connected to server')
     })
     const handleMessageReceive = (data) => {
-      setMessages(prevMessages => [...prevMessages, data])
+      setMessages([...messages, data])
     }
     socket.on('receiveMessage', handleMessageReceive)
     return () => {
       socket.off('receiveMessage', handleMessageReceive)
     }
-  }, [])
-
+  }, [messages])
   const sendMessage = () => {
     if (message.trim()) {
-      socket.emit('sendMessage', { username, message })
+      socket.emit('sendMessage', message)
       setMessage('')
     }
   }
-
   const setUser = () => {
     if (username.trim()) {
       socket.emit('setUsername', username)
       setIsUsernameSet(true)
     }
   }
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      isUsernameSet ? sendMessage() : setUser()
-    }
-  }
-
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 font-sans">
-      <header className="bg-blue-600 text-white p-4 shadow-md">
-        <h1 className="text-3xl font-bold text-center">Real-Time Chat App</h1>
-      </header>
-
-      <main className="flex-grow container mx-auto px-4 py-8 max-w-2xl">
+    <>
+      <div className='bg-blue-50 text-black w-screen h-screen m-0 text-center'>
+        <h1 className='text-4xl m-5'>Real Time Chat App</h1>
         {!isUsernameSet ? (
-          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-            <input 
-              type="text" 
-              value={username} 
-              className="w-full mb-4 px-4 py-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300" 
-              placeholder="Enter your username" 
-              onChange={(e) => setUsername(e.target.value)}
-              onKeyPress={handleKeyPress}
-            />
-            <button 
-              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500" 
-              onClick={setUser}
-            >
-              Start Chatting
-            </button>
+          <div className='w-96 m-auto'>
+            <input type='text' value={username} className='w-1/2 m-5 border border-blue-200 p-3 rounded' placeholder='Enter your username' onChange={(e) => { setUsername(e.target.value) }} />
+            <button className='bg-blue-500 text-white p-3 rounded-lg' onClick={setUser}>Start Chatting</button>
           </div>
         ) : (
-          <div className="flex flex-col h-full">
-            <div className="flex-grow overflow-y-auto mb-4 space-y-3">
-              {messages.map((msg, index) => (
-                <div 
-                  key={index} 
-                  className="bg-white rounded-xl p-4 shadow-md max-w-md mx-auto break-words"
-                >
-                  <span className="font-bold text-blue-600 mr-2">{msg.username}:</span>
-                  <span>{msg.message}</span>
-                </div>
-              ))}
+          <>
+            <div className='messages-container m-auto w-4xl '>
+              {
+                messages && messages.map((msg, index) => {
+                  return (
+                    <p key={index} className='bg-blue-200 p-5 rounded m-2 w-fit'>
+                      <strong>{msg.username}: </strong>{msg.message}</p>
+                  )
+                })
+              }
             </div>
-
-            <div className="flex space-x-2">
-              <input 
-                type="text" 
-                value={message} 
-                className="flex-grow px-4 py-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300" 
-                placeholder="Type your message..." 
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-              />
-              <button 
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                onClick={sendMessage}
-              >
-                Send
-              </button>
-            </div>
-          </div>
+            <input type='text' value={message} className='w-1/2 m-5 border border-blue-200 p-3 rounded' placeholder='Type your message..' onChange={(e) => { setMessage(e.target.value) }} />
+            <button className='bg-blue-500 text-white p-3 rounded-lg' onClick={sendMessage}>Send</button></>
         )}
-      </main>
-    </div>
+      </div>
+    </>
   )
 }
-
 export default App
