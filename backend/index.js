@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000; // ✅ Use dynamic port for Render
 
 const io = new Server(server, {
   cors: {
-    origin: "https://web-socket-chat-app-nu.vercel.app", // ✅ No trailing slash
+    origin: "*", // ✅ No trailing slash
     methods: ["GET", "POST"],
   },
 });
