@@ -36,31 +36,82 @@ function App() {
     }
   }
   return (
-    <>
-      <div className='bg-blue-50 text-black w-screen h-screen m-0 text-center'>
-        <h1 className='text-4xl m-5'>Real Time Chat App</h1>
-        {!isUsernameSet ? (
-          <div className='w-96 m-auto'>
-            <input type='text' value={username} className='w-1/2 m-5 border border-blue-200 p-3 rounded' placeholder='Enter your username' onChange={(e) => { setUsername(e.target.value) }} />
-            <button className='bg-blue-500 text-white p-3 rounded-lg' onClick={setUser}>Start Chatting</button>
+    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 min-h-screen flex flex-col items-center p-4">
+      <h1 className="text-4xl font-bold text-indigo-700 my-6">Real Time Chat App</h1>
+      
+      {!isUsernameSet ? (
+        <div className="bg-white rounded-lg shadow-md p-8 w-full max-w-md">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Join the Conversation</h2>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <input 
+              type="text" 
+              value={username} 
+              className="flex-1 border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+              placeholder="Enter your username" 
+              onChange={(e) => { setUsername(e.target.value) }} 
+            />
+            <button 
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200" 
+              onClick={setUser}
+            >
+              Start Chatting
+            </button>
           </div>
-        ) : (
-          <>
-            <div className='messages-container m-auto w-4xl '>
-              {
-                messages && messages.map((msg, index) => {
-                  return (
-                    <p key={index} className='bg-blue-200 p-5 rounded m-2 w-fit'>
-                      <strong>{msg.username}: </strong>{msg.message}</p>
-                  )
-                })
-              }
+        </div>
+      ) : (
+        <div className="w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="bg-indigo-600 text-white p-4">
+            <h2 className="text-xl font-semibold">Chat Room</h2>
+            <p className="text-indigo-200">Welcome, {username}!</p>
+          </div>
+          
+          <div className="messages-container h-96 overflow-y-auto p-4 flex flex-col gap-2">
+            {messages && messages.length === 0 ? (
+              <p className="text-center text-gray-500 italic my-10">No messages yet. Start the conversation!</p>
+            ) : (
+              messages.map((msg, index) => {
+                const isOwnMessage = msg.username === username;
+                return (
+                  <div 
+                    key={index} 
+                    className={`max-w-[80%] ${isOwnMessage ? 'self-end' : 'self-start'}`}
+                  >
+                    <div className={`rounded-lg p-3 break-words ${
+                      isOwnMessage 
+                        ? 'bg-indigo-600 text-white rounded-br-none' 
+                        : 'bg-gray-200 text-gray-800 rounded-bl-none'
+                    }`}>
+                      {!isOwnMessage && <p className="font-bold text-sm">{msg.username}</p>}
+                      <p>{msg.message}</p>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">Just now</p>
+                  </div>
+                );
+              })
+            )}
+          </div>
+          
+          <div className="p-4 border-t border-gray-200">
+            <div className="flex gap-2">
+              <input 
+                type="text" 
+                value={message} 
+                className="flex-1 border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                placeholder="Type your message..." 
+                onChange={(e) => { setMessage(e.target.value) }}
+                onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+              />
+              <button 
+                className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200" 
+                onClick={sendMessage}
+              >
+                Send
+              </button>
             </div>
-            <input type='text' value={message} className='w-1/2 m-5 border border-blue-200 p-3 rounded' placeholder='Type your message..' onChange={(e) => { setMessage(e.target.value) }} />
-            <button className='bg-blue-500 text-white p-3 rounded-lg' onClick={sendMessage}>Send</button></>
-        )}
-      </div>
-    </>
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
 export default App
