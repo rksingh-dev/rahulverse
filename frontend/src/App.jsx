@@ -40,7 +40,7 @@ function App() {
   }
   return (
     <div className="bg-gradient-to-r from-blue-50 to-indigo-50 min-h-screen flex flex-col items-center p-4">
-      <h1 className="text-4xl font-bold text-indigo-700 my-6">Real Time Chat App</h1>
+      <h1 className="text-4xl font-bold text-indigo-700 my-6">RahulVerse-Real Time Chatting</h1>
       
       {!isUsernameSet ? (
         <div className="bg-white rounded-lg shadow-md p-8 w-full max-w-md">
