@@ -33,10 +33,6 @@ RahulVerse is a modern, real-time chat application built with React and Socket.I
 
 Check out the live application: [RahulVerse Chat App](https://rahulverse.vercel.app)
 
-## 📸 Screenshots
-
-![Login Screen](https://via.placeholder.com/800x400?text=Login+Screen)
-![Chat Interface](https://via.placeholder.com/800x400?text=Chat+Interface)
 
 ## 🏁 Getting Started
 
@@ -129,20 +125,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👨‍💻 Author
 
-**Rahul Singh**
-- GitHub: [rksingh-dev](https://github.com/rksingh-dev)
-- LinkedIn: [Rahul Singh](https://linkedin.com/in/rahulsingh)
-
-## 🙏 Acknowledgements
-
-- [Socket.IO](https://socket.io/)
-- [React](https://reactjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Vite](https://vitejs.dev/)
-- [Express](https://expressjs.com/)
-
----
 
 Made with ❤️ by Rahul Singh
