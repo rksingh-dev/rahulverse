@@ -1,7 +1,7 @@
 
 # RahulVerse - Real-Time Chat Application
 
-![RahulVerse Logo](https://via.placeholder.com/150?text=RahulVerse)
+
 
 ## 📝 Overview
 
