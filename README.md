@@ -31,7 +31,7 @@ RahulVerse is a modern, real-time chat application built with React and Socket.I
 
 ## 🚀 Live Demo
 
-Check out the live application: [RahulVerse Chat App](https://rahulverse-chat.vercel.app)
+Check out the live application: [RahulVerse Chat App](https://rahulverse.vercel.app)
 
 ## 📸 Screenshots
 
