@@ -15,14 +15,17 @@ function App() {
     socket.on('connect', () => {
       console.log('Connected to server')
     })
+    
     const handleMessageReceive = (data) => {
-      setMessages([...messages, data])
+      setMessages((prevMessages) => [...prevMessages, data])
     }
+    
     socket.on('receiveMessage', handleMessageReceive)
+    
     return () => {
       socket.off('receiveMessage', handleMessageReceive)
     }
-  }, [messages])
+  }, [])
   const sendMessage = () => {
     if (message.trim()) {
       socket.emit('sendMessage', message)
