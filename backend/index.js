@@ -5,17 +5,17 @@ const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
-const PORT = process.env.PORT || 3000; // ✅ Use dynamic port for Render
+const PORT = process.env.PORT || 3000; 
 
 const io = new Server(server, {
   cors: {
-    origin: "*", // ✅ No trailing slash
+    origin: "*", 
     methods: ["GET", "POST"],
   },
 });
 
 app.use(cors());
-app.use(express.json()); // for parsing application/json
+app.use(express.json()); 
 
 let users = {};
 
