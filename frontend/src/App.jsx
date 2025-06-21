@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
 import { io } from 'socket.io-client'
-import { Upload, Send, X, Image, Video, FileText } from 'lucide-react'
 
 const socket = io('https://web-socket-chat-app-w5nq.onrender.com', {
   transports: ['websocket'],
@@ -235,11 +234,11 @@ function App() {
               <div className="flex items-start gap-3 bg-white p-3 rounded-lg border">
                 <div className="flex-shrink-0">
                   {selectedFile.type.startsWith('image/') ? (
-                    <Image className="w-6 h-6 text-blue-500" />
+                    <span className="w-6 h-6 text-blue-500 text-lg">🖼️</span>
                   ) : selectedFile.type.startsWith('video/') ? (
-                    <Video className="w-6 h-6 text-red-500" />
+                    <span className="w-6 h-6 text-red-500 text-lg">🎥</span>
                   ) : (
-                    <FileText className="w-6 h-6 text-gray-500" />
+                    <span className="w-6 h-6 text-gray-500 text-lg">📄</span>
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -257,7 +256,7 @@ function App() {
                   onClick={clearSelectedFile}
                   className="flex-shrink-0 p-1 text-gray-400 hover:text-gray-600"
                 >
-                  <X className="w-4 h-4" />
+                  <span className="text-lg">✕</span>
                 </button>
               </div>
             </div>
@@ -276,8 +275,9 @@ function App() {
                 onClick={() => fileInputRef.current?.click()}
                 className="flex-shrink-0 p-3 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors duration-200"
                 disabled={isUploading}
+                title="Upload file"
               >
-                <Upload className="w-5 h-5" />
+                <span className="text-lg">📎</span>
               </button>
               <input 
                 type="text" 
@@ -296,7 +296,7 @@ function App() {
                 {isUploading ? (
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
-                  <Send className="w-4 h-4" />
+                  <span>➤</span>
                 )}
                 {isUploading ? 'Sending...' : 'Send'}
               </button>
